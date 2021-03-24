@@ -51,7 +51,7 @@ async def on_ready():
     print('Bot ready!')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="my stonks go down"))
 
-@client.command(name='die', help='This command returns a random last words')
+@client.command(name='die', help='This command returns a random last word')
 async def die(ctx):
     responses = ['why have you brought my short life to an end', 'i could have done so much more', 'i have a family, kill them instead']
     await ctx.send(random.choice(responses))

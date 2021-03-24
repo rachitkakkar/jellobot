@@ -59,7 +59,7 @@ async def on_message(message):
 
             if len(regex) > 0:
                 if chance <= 50:
-                    await message.channel.send(f'your face is {regex[0]}')
+                    await message.channel.send(f'your face {regex[0]}')
 
         if "I" in message.content or 'i' in message.content:
             regex = re.findall("(?<=i ).*", message.content, re.IGNORECASE)

@@ -40,6 +40,10 @@ async def on_message(message):
                 if chance <= 50:
                     await message.channel.send(f'your face is {regex[0]}')
 
+        if "bruh" in message.content:
+            if chance <= 50:
+                await message.channel.send(f'burh')
+
     await client.process_commands(message)
 
 @client.event

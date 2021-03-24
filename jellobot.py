@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 
 import re
+import random
 
 client = commands.Bot(command_prefix='>>')
 TOKEN = ''
@@ -9,23 +10,28 @@ TOKEN = ''
 @client.event
 async def on_message(message):
     if client.user.id != message.author.id:
+        chance = random.randint(1,100)
+
         if 'your' in message.content:
             regex = re.findall('(?<=your ).*', message.content, re.IGNORECASE)
 
             if len(regex) > 0:
-                await message.channel.send(f'your face is {regex[0]}')
+                if chance <= 50:
+                    await message.channel.send(f'your face is {regex[0]}')
 
         if 'you' in message.content:
             regex = re.findall('(?<=you ).*', message.content, re.IGNORECASE)
 
             if len(regex) > 0:
-                await message.channel.send(f'your face is {regex[0]}')
+                if chance <= 50:
+                    await message.channel.send(f'your face is {regex[0]}')
 
         if "you're" in message.content:
             regex = re.findall("(?<=you\'re ).*", message.content, re.IGNORECASE)
 
             if len(regex) > 0:
-                await message.channel.send(f'your face is {regex[0]}')
+                if chance <= 50:
+                    await message.channel.send(f'your face is {regex[0]}')
 
     await client.process_commands(message)
 

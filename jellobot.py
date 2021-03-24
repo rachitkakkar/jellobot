@@ -64,3 +64,6 @@ async def on_guild_join(guild):
         break
 
 client.run(TOKEN, bot=True)
+
+print("I really need to")
+print("make this 69 lines of code")

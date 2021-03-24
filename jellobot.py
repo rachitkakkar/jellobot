@@ -33,41 +33,6 @@ async def on_message(message):
                 if chance <= 50:
                     await message.channel.send(f'your face is {regex[0]}')
 
-        if "is" in message.content:
-            regex = re.findall("(?<=is ).*", message.content, re.IGNORECASE)
-
-            if len(regex) > 0:
-                if chance <= 50:
-                    await message.channel.send(f'your face is {regex[0]}')
-
-        if "that's" in message.content:
-            regex = re.findall("(?<=that\'s ).*", message.content, re.IGNORECASE)
-
-            if len(regex) > 0:
-                if chance <= 50:
-                    await message.channel.send(f'your face is {regex[0]}')
-
-        if "thats" in message.content:
-            regex = re.findall("(?<=thats ).*", message.content, re.IGNORECASE)
-
-            if len(regex) > 0:
-                if chance <= 50:
-                    await message.channel.send(f'your face is {regex[0]}')
-
-        if "that" in message.content:
-            regex = re.findall("(?<=that ).*", message.content, re.IGNORECASE)
-
-            if len(regex) > 0:
-                if chance <= 50:
-                    await message.channel.send(f'your face is {regex[0]}')
-
-        if "I" in message.content or 'i' in message.content:
-            regex = re.findall("(?<=i ).*", message.content, re.IGNORECASE)
-
-            if len(regex) > 0:
-                if chance <= 50:
-                    await message.channel.send(f'your face is {regex[0]}')
-
         if "bruh" in message.content:
             if chance <= 50:
                 await message.channel.send(f'burh')

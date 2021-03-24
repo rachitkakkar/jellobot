@@ -4,7 +4,7 @@ from discord.ext import commands
 import re
 import random
 
-client = commands.Bot(command_prefix='>>')
+client = commands.Bot(command_prefix='$')
 TOKEN = ''
 
 @client.event
@@ -50,6 +50,11 @@ async def on_message(message):
 async def on_ready():
     print('Bot ready!')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="my stonks go down"))
+
+@client.command(name='die', help='This command returns a random last words')
+async def die(ctx):
+    responses = ['why have you brought my short life to an end', 'i could have done so much more', 'i have a family, kill them instead']
+    await ctx.send(random.choice(responses))
 
 @client.event
 async def on_guild_join(guild):

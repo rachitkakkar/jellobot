@@ -4,7 +4,7 @@ from discord.ext import commands
 import re
 import random
 
-client = commands.Bot(command_prefix='$')
+client = commands.Bot(command_prefix='?')
 TOKEN = ''
 
 @client.event

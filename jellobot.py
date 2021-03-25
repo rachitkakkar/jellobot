@@ -4,6 +4,8 @@ from discord.ext import commands
 import re
 import random
 
+import pickle
+
 bank = {}
 
 client = commands.Bot(command_prefix='?')
@@ -105,11 +107,48 @@ async def work(ctx):
     else:
         await ctx.send("You don't have a bank account")
 
+@client.command(name='give', help='This command gives another person money')
+async def give(ctx, name, money):
+    global bank
+
+    if ctx.author.name in bank:
+        if name in bank:
+            if bank[ctx.author.name] >= int(money):
+                bank[name] += int(money)
+                bank[ctx.author.name] -= int(money)
+
+                await ctx.send(f'{name} has recieved ${money}')
+
+            else:
+                await ctx.send("You don't have that much money")
+
+        else: 
+            await ctx.send(f"{name} doesn't have a bank account")
+
+    else:
+        await ctx.send("You don't have a bank account")
+
 @client.command(name='lb', help='See leadboard')
 async def lb(ctx):
     global bank
 
     await ctx.send(str(bank))
+
+@client.command(name='save', help='Save the bank info')
+async def save(ctx):
+    global bank
+    pickle.dump(bank, open('bank.txt', 'wb'))
+    await ctx.send(f'Saved Data {bank}')
+
+@client.command(name='load', help='Load the bank info')
+async def load(ctx):
+    global bank
+    
+    with open('bank.txt', 'rb') as handle:
+        data = handle.read()
+  
+    bank = pickle.loads(data)
+    await ctx.send(f'Loaded Data {bank}')
 
 @client.event
 async def on_guild_join(guild):

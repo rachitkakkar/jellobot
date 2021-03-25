@@ -65,7 +65,7 @@ async def die(ctx):
 
 @client.command(name='ping', help='This command returns latency')
 async def ping(ctx):
-    await ctx.send(f'**Pong!** {client.latency*1000} ms')
+    await ctx.send(f'**Pong!** {round(client.latency*1000)} ms')
 
 @client.command(name='green_screen', help='This command helps you frame me')
 async def green_screen(ctx):

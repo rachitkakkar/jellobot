@@ -20,5 +20,6 @@ lb             See leadboard
 load           Load the bank info
 ping           This command returns latency
 save           Save the bank info
+useless        This command returns a useless image
 work           This command gives you money ranging from 1-100, there is a 6 second cooldown
 ```

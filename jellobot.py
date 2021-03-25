@@ -94,7 +94,8 @@ async def create_account(ctx):
         bank.update({ctx.author.name: 1000})
         await ctx.send('Account has been created, and $1,000 has been placed in it!')
 
-@client.command(name='work', help='This command gives you money ranging from 1-100')
+@commands.cooldown(1, 6.0, commands.BucketType.user)
+@client.command(name='work', help='This command gives you money ranging from 1-100, there is a 6 second cooldown')
 async def work(ctx):
     global bank
 

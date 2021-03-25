@@ -5,7 +5,7 @@ A discord bot made for an inside joke.
 The discord.py module is required, and the code runs on Python 3.9. It also needs pandas to read/write the bank info.
 
 # Features
-- The bot respons with `your face is {}` after noticing certain keywords like your or is.
+- The bot responds with `your face is {}` after noticing certain keywords like your or is.
 - The bot also has a basic economy, but you must run `?save` before you close the bot to save the bank info, and `?load` is needed to get the data back after a restart.
 - The bot responds with a custom message for any message that has bruh, poop, and cool.
 

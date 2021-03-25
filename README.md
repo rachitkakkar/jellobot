@@ -2,7 +2,7 @@
 A discord bot made for an inside joke.
 
 # Requirements
-The discord.py module is required, and the code runs on Python 3.9
+The discord.py module is required, and the code runs on Python 3.9. It also needs pandas to read/write the bank info.
 
 # Features
 - The bot respons with `your face is {}` after noticing certain keywords like your or is.

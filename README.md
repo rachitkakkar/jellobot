@@ -20,5 +20,5 @@ lb             See leadboard
 load           Load the bank info
 ping           This command returns latency
 save           Save the bank info
-work           This command gives you money ranging from 1-100
+work           This command gives you money ranging from 1-100, there is a 6 second cooldown
 ```

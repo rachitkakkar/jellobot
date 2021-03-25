@@ -9,8 +9,8 @@ TOKEN = ''
 
 @client.event
 async def on_message(message):
-    if client.user.id != message.author.id:
-        chance = random.randint(1,100)
+    if client.user.id != message.author.id and message.author.id != 690631706650083328:
+        chance = 50
 
         if 'your' in message.content:
             regex = re.findall('(?<=your ).*', message.content, re.IGNORECASE)
@@ -28,6 +28,13 @@ async def on_message(message):
 
         if "you're" in message.content:
             regex = re.findall("(?<=you\'re ).*", message.content, re.IGNORECASE)
+
+            if len(regex) > 0:
+                if chance <= 50:
+                    await message.channel.send(f'your face is {regex[0]}')
+
+        if "im" in message.content or "Im" in message.content:
+            regex = re.findall("(?<=im\'re ).*", message.content, re.IGNORECASE)
 
             if len(regex) > 0:
                 if chance <= 50:
@@ -56,6 +63,14 @@ async def die(ctx):
     responses = ['why have you brought my short life to an end', 'i could have done so much more', 'i have a family, kill them instead']
     await ctx.send(random.choice(responses))
 
+@client.command(name='ping', help='This command returns latency')
+async def ping(ctx):
+    await ctx.send(f'**Pong!** {client.latency}')
+
+@client.command(name='green_screen', help='This command helps you frame me')
+async def green_screen(ctx):
+    await ctx.send('https://i.ytimg.com/vi/80ygBP8r7As/maxresdefault.jpg')
+
 @client.event
 async def on_guild_join(guild):
     for channel in guild.text_channels:
@@ -64,6 +79,3 @@ async def on_guild_join(guild):
         break
 
 client.run(TOKEN, bot=True)
-
-print("I really need to")
-print("make this 69 lines of code")

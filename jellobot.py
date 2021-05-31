@@ -5,12 +5,13 @@ import re
 import random
 import pickle
 from nltk.corpus import wordnet as wn
+from datetime import datetime
 
 bank = {}
 all_verbs = [word for synset in wn.all_synsets('v') for word in synset.lemma_names()]
 
 client = commands.Bot(command_prefix='?')
-TOKEN = ''
+TOKEN = 'ODI0MzQ2NzI5NjIwMzA4MDA5.YFuCtw.25TEAm7RPLg29HOGGWpbHlL3rtk'
 
 @client.event
 async def on_message(message):
@@ -27,24 +28,27 @@ async def on_message(message):
                     await message.channel.send(f'your face {content}')
                     break
 
-        if "poop" in message.content:
+        if 'poop' in message.content:
             if chance <= chance_threshold:
                 await message.channel.send('Poop??? HAHAHAHHAHAHAHAH :rofl::rofl: :rofl: :rofl: :rofl: :rofl: https://media.discordapp.net/attachments/777581776217440307/819984348580937778/explode.gif')
         
-        if "cool" in message.content:
+        if 'cool' in message.content:
             if chance <= chance_threshold:
                 await message.channel.send('i bet this is cooler https://cdn.discordapp.com/attachments/810275293839097926/824673855259672616/maxresdefault.png')
         
-        if "bruh" in message.content:
+        if 'bruh' in message.content:
             if chance <= chance_threshold:
                 await message.channel.send('burh')
+
+        if '?poll' in message.content:
+            await message.delete()
 
     await client.process_commands(message)
 
 @client.event
 async def on_ready():
     print('Bot ready!')
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="my stonks go down"))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='my stonks go down'))
 
 @client.command(name='die', help='This command returns a random last word')
 async def die(ctx):
@@ -77,6 +81,14 @@ async def useless(ctx):
     'https://static.boredpanda.com/blog/wp-content/uploads/2016/10/most-pointless-useless-things-53-580f197497207__605.jpg']
 
     await ctx.send(random.choice(responses))
+
+@client.command(name='poll', help='This command allows a poll with upvotes and downvotes', pass_context = True)
+async def poll(ctx, *, question):
+    embed = discord.Embed(title = 'POLL', color=ctx.author.color, description=question, timestamp=datetime.now())
+    embed.set_footer(text=f'AUTHOR: {ctx.author.name}')
+    message = await ctx.send(embed=embed) 
+    await message.add_reaction('👍')
+    await message.add_reaction('👎')
 
 @client.command(name='ping', help='This command returns latency')
 async def ping(ctx):
@@ -160,5 +172,10 @@ async def on_guild_join(guild):
         if channel.permissions_for(guild.me).send_messages:
             await channel.send('why have you brought me to this cruel world')
         break
+
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        await ctx.send(f'This command is on cooldown, you can use it in {round(error.retry_after, 2)} seconds')
 
 client.run(TOKEN, bot=True)

@@ -10,7 +10,7 @@ bank = {}
 all_verbs = [word for synset in wn.all_synsets('v') for word in synset.lemma_names()]
 
 client = commands.Bot(command_prefix='?')
-TOKEN = 'ODI0MzQ2NzI5NjIwMzA4MDA5.YFuCtw.oOSiDjZq_oFEWWY3t26iDqlAL_U'
+TOKEN = ''
 
 @client.event
 async def on_message(message):

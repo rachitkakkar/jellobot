@@ -7,6 +7,7 @@ The discord.py module is required, and the code runs on Python 3.9. It also need
 # Features
 - The bot responds with `your face is {}` to sentences (uses things like verbs and adjectives to construct replies) - (15% chance)
 - The bot also has a basic economy, but you must run `?save` before you close the bot to save the bank info, and `?load` is needed to get the data back after a restart.
+- The bot has a thumbs up/thumbs down poll command - `?poll {prompt}`.
 - The bot responds with a custom message for any message that has bruh, poop, and cool. (15% chance)
 - The bot has a lot of other fun commands like `?die`, `?useless`, and `?green_screen`.
 

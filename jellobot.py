@@ -3,64 +3,40 @@ from discord.ext import commands
 
 import re
 import random
-
 import pickle
+from nltk.corpus import wordnet as wn
 
 bank = {}
+all_verbs = [word for synset in wn.all_synsets('v') for word in synset.lemma_names()]
 
 client = commands.Bot(command_prefix='?')
-TOKEN = ''
+TOKEN = 'ODI0MzQ2NzI5NjIwMzA4MDA5.YFuCtw.oOSiDjZq_oFEWWY3t26iDqlAL_U'
 
 @client.event
 async def on_message(message):
-    if client.user.id != message.author.id and message.author.id != 690631706650083328:
+    if client.user.id != message.author.id:
         chance = random.randint(1, 100)
+        chance_threshold = 15
 
-        if 'your' in message.content:
-            regex = re.findall('(?<=your ).*', message.content, re.IGNORECASE)
-
-            if len(regex) > 0:
-                if chance <= 15:
-                    await message.channel.send(f'your face is {regex[0]}')
-
-        if 'you' in message.content:
-            regex = re.findall('(?<=you ).*', message.content, re.IGNORECASE)
-
-            if len(regex) > 0:
-                if chance <= 15:
-                    await message.channel.send(f'your face is {regex[0]}')
-
-        if "you're" in message.content:
-            regex = re.findall("(?<=you\'re ).*", message.content, re.IGNORECASE)
-
-            if len(regex) > 0:
-                if chance <= 15:
-                    await message.channel.send(f'your face is {regex[0]}')
-
-        if "im" in message.content or "Im" in message.content:
-            regex = re.findall("(?<=im\'re ).*", message.content, re.IGNORECASE)
-
-            if len(regex) > 0:
-                if chance <= 15:
-                    await message.channel.send(f'your face is {regex[0]}')
-
-        if "is" in message.content:
-            regex = re.findall("(?<=is ).*", message.content, re.IGNORECASE)
-
-            if len(regex) > 0:
-                if chance <= 15:
-                    await message.channel.send(f'your face is {regex[0]}')
+        for word in message.content.split(' '):
+            if word in all_verbs:
+                if chance <= chance_threshold:
+                    content = re.findall('(?<='+word+' '').*', message.content, re.IGNORECASE)
+                    content = word + 's ' + content[0]
+                    
+                    await message.channel.send(f'your face {content}')
+                    break
 
         if "poop" in message.content:
-            if chance <= 15:
-                await message.channel.send('Poop??? HAHAHAHHAHAHAHAHh :rofl::rofl: :rofl: :rofl: :rofl: :rofl: https://media.discordapp.net/attachments/777581776217440307/819984348580937778/explode.gif')
+            if chance <= chance_threshold:
+                await message.channel.send('Poop??? HAHAHAHHAHAHAHAH :rofl::rofl: :rofl: :rofl: :rofl: :rofl: https://media.discordapp.net/attachments/777581776217440307/819984348580937778/explode.gif')
         
         if "cool" in message.content:
-            if chance <= 15:
+            if chance <= chance_threshold:
                 await message.channel.send('i bet this is cooler https://cdn.discordapp.com/attachments/810275293839097926/824673855259672616/maxresdefault.png')
         
         if "bruh" in message.content:
-            if chance <= 15:
+            if chance <= chance_threshold:
                 await message.channel.send('burh')
 
     await client.process_commands(message)

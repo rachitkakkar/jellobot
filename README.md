@@ -1,8 +1,8 @@
 # jellobot
-A discord bot made for an inside joke.
+A discord bot made for an inside joke. Since then its evolved to have polling, an economy, some other fun commands, and of course I have made the original joke work better using nltk's wordnet (to find adjectives and verbs).
 
 # Requirements
-The discord.py and asyncion modules are required, and the code runs on Python 3.9. It also needs pandas to read/write the bank info. On top of this it needs regex, nltk, and the nltk wordnet. These modules are used for langauge parsing.
+The discord.py and asyncio modules are required, and the code runs on Python 3.9. It also needs pandas to read/write the bank info. On top of this it needs regex, nltk, and the nltk wordnet. These modules are used for langauge parsing.
 
 # Features
 - The bot responds with `your face is {}` to sentences (uses things like verbs and adjectives to construct replies) - (15% chance)

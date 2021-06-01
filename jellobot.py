@@ -3,6 +3,7 @@ from discord.ext import commands
 
 import re
 import random
+import asyncio
 import pickle
 from nltk.corpus import wordnet as wn
 from datetime import datetime
@@ -18,19 +19,18 @@ TOKEN = ''
 async def on_message(message):
     if client.user.id != message.author.id:
         chance = random.randint(1, 100)
-        chance_threshold = 100
+        chance_threshold = 15
 
-        for word in message.content.split(' '):
-            if word in all_verbs:
-                if chance <= chance_threshold:
+        if chance <= chance_threshold:
+            for word in message.content.split(' '):
+                if word in all_verbs:
                     content = re.findall('(?<='+word+' '').*', message.content, re.IGNORECASE)
                     content = word + 's ' + content[0]
                     
                     await message.channel.send(f'your face {content}')
                     break
 
-            if word in all_adjectives:
-                if chance <= chance_threshold:
+                if word in all_adjectives:
                     content = re.findall('(?<='+word+' '').*', message.content, re.IGNORECASE)
                     content = word + ' ' + content[0]
                     
@@ -48,9 +48,6 @@ async def on_message(message):
         if 'bruh' in message.content:
             if chance <= chance_threshold:
                 await message.channel.send('burh')
-
-        if '?poll' in message.content or '?tally' in message.content:
-            await message.delete()
 
     await client.process_commands(message)
 
@@ -91,21 +88,33 @@ async def useless(ctx):
 
     await ctx.send(random.choice(responses))
 
-@client.command(name='poll', help='This command allows a poll with upvotes and downvotes', pass_context = True)
-async def poll(ctx, *, question):
-    embed = discord.Embed(title = 'POLL', color=ctx.author.color, description=question, timestamp=datetime.now())
+@client.command(name='poll', help='This command allows a poll with upvotes and downvote - and tallies them after a specified number of hours', pass_context = True)
+async def poll(ctx, hours: int, *, question):
+    await ctx.message.delete()
+    embed = discord.Embed(title = '📣 POLL', color=ctx.author.color, description=question, timestamp=datetime.now())
     embed.set_footer(text=f'AUTHOR: {ctx.author.name}')
-    message = await ctx.send(embed=embed) 
+    message = await ctx.send(embed=embed)
     await message.add_reaction('👍')
     await message.add_reaction('👎')
     await ctx.send(f'ID: {message.id}')
-
-@client.command(name='tally', help='This command tallies a poll', pass_context = True)
-async def tally(ctx, id: int):
+    
+    id = message.id
+    await asyncio.sleep(hours * 60 * 60)
+    print("test")
     message = await ctx.fetch_message(id)
-    await message.reply(f'This poll has {(message.reactions[0].count)-1} 👍 and {(message.reactions[1].count)-1} 👎')
+    await message.reply(f'This 📣 poll has {(message.reactions[0].count)-1} 👍 and {(message.reactions[1].count)-1} 👎')
 
-@client.command(name='ping', help='This command returns latency')
+@client.command(name='delete-bot-message', help='This command deletes a bot message (you can get the id from copy message link - it is the number at the very end)', pass_context = True)
+async def delete_bot_message(ctx, id: int):
+    await ctx.message.delete()
+    message = await ctx.fetch_message(id)
+    if client.user.id == message.author.id:
+        await message.delete()
+
+    else:
+        await ctx.send(f"You IDIOT did you REALLY THINK I would let you delete OTHER PEOPLE's MESSAGES! smh so hard rn (the person who pulled this stunt was {ctx.author.name} btw)")
+
+client.command(name='ping', help='This command returns latency')
 async def ping(ctx):
     await ctx.send(f'**Pong!** {round(client.latency*1000)} ms')
 

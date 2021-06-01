@@ -9,6 +9,7 @@ from datetime import datetime
 
 bank = {}
 all_verbs = [word for synset in wn.all_synsets('v') for word in synset.lemma_names()]
+all_adjectives = [word for synset in wn.all_synsets('a') for word in synset.lemma_names()]
 
 client = commands.Bot(command_prefix='?')
 TOKEN = ''
@@ -17,7 +18,7 @@ TOKEN = ''
 async def on_message(message):
     if client.user.id != message.author.id:
         chance = random.randint(1, 100)
-        chance_threshold = 15
+        chance_threshold = 100
 
         for word in message.content.split(' '):
             if word in all_verbs:
@@ -26,6 +27,14 @@ async def on_message(message):
                     content = word + 's ' + content[0]
                     
                     await message.channel.send(f'your face {content}')
+                    break
+
+            if word in all_adjectives:
+                if chance <= chance_threshold:
+                    content = re.findall('(?<='+word+' '').*', message.content, re.IGNORECASE)
+                    content = word + ' ' + content[0]
+                    
+                    await message.channel.send(f'your face is a {content}')
                     break
 
         if 'poop' in message.content:
@@ -40,7 +49,7 @@ async def on_message(message):
             if chance <= chance_threshold:
                 await message.channel.send('burh')
 
-        if '?poll' in message.content:
+        if '?poll' in message.content or '?tally' in message.content:
             await message.delete()
 
     await client.process_commands(message)
@@ -89,6 +98,12 @@ async def poll(ctx, *, question):
     message = await ctx.send(embed=embed) 
     await message.add_reaction('👍')
     await message.add_reaction('👎')
+    await ctx.send(f'ID: {message.id}')
+
+@client.command(name='tally', help='This command tallies a poll', pass_context = True)
+async def tally(ctx, id: int):
+    message = await ctx.fetch_message(id)
+    await message.reply(f'This poll has {(message.reactions[0].count)-1} 👍 and {(message.reactions[1].count)-1} 👎')
 
 @client.command(name='ping', help='This command returns latency')
 async def ping(ctx):

@@ -89,10 +89,11 @@ async def useless(ctx):
     await ctx.send(random.choice(responses))
 
 @client.command(name='poll', help='This command allows a poll with upvotes and downvote - and tallies them after a specified number of hours', pass_context = True)
-async def poll(ctx, hours: int, *, question):
+async def poll(ctx, hours: float, *, question):
     await ctx.message.delete()
     embed = discord.Embed(title = '📣 POLL', color=ctx.author.color, description=question, timestamp=datetime.now())
     embed.set_footer(text=f'AUTHOR: {ctx.author.name}')
+    embed.set_footer(text=f'DURATION: {hours} hours')
     message = await ctx.send(embed=embed)
     await message.add_reaction('👍')
     await message.add_reaction('👎')
@@ -100,7 +101,6 @@ async def poll(ctx, hours: int, *, question):
     
     id = message.id
     await asyncio.sleep(hours * 60 * 60)
-    print("test")
     message = await ctx.fetch_message(id)
     await message.reply(f'This 📣 poll has {(message.reactions[0].count)-1} 👍 and {(message.reactions[1].count)-1} 👎')
 

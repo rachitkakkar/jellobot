@@ -1,3 +1,5 @@
+**UPDATE:** Development on jellobot has ceased, and the project is now discontinued. However, a friend has forked the project (called [jellobotv2](https://github.com/swissconfederation/jellobotv2)) and plans to continue adding features.
+
 # jellobot
 A discord bot made for an inside joke. Since then its evolved to have polling, an economy, some other fun commands, and of course I have made the original joke work better using nltk's wordnet (to find adjectives and verbs).
 
